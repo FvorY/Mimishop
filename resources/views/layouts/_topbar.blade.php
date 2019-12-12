@@ -5,7 +5,7 @@
                     <div class="col-xl-2 col-lg-2">
                         <div class="logo pt-40">
                             <a href="index.html">
-                                <img src="assets/img/logo/logo.png" alt="">
+                                <h3>Mimi Shop</h3>
                             </a>
                         </div>
                     </div>
@@ -14,7 +14,7 @@
                             <nav>
                                 <ul>
                                     <li class="angle-shape">
-                                      <a href="shop.html"> Shop </a>
+                                      <a href="{{url('/')}}"> Home </a>
                                     </li>
                                 </ul>
                             </nav>
@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="shopping-cart-btn btn-hover text-center">
                                             <a class="default-btn" href="checkout.html">checkout</a>
-                                            <a class="default-btn" href="cart-page.html">view cart</a>
+                                            <a class="default-btn" href="{{url('cartlist')}}">view cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -81,8 +81,8 @@
                                         <li>
                                             <h4>Account</h4>
                                             <ul>
-                                                <li><a href="login-register.html">Login</a></li>
-                                                <li><a href="login-register.html">Create Account</a></li>
+                                                <li><a href="{{url('login')}}">Login</a></li>
+                                                <li><a href="{{url('register')}}">Create Account</a></li>
                                                 <li><a href="my-account.html">My Account</a></li>
                                             </ul>
                                         </li>
@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="shopping-cart-btn btn-hover text-center">
                                             <a class="default-btn" href="checkout.html">checkout</a>
-                                            <a class="default-btn" href="cart-page.html">view cart</a>
+                                            <a class="default-btn" href="{{url('cartlist')}}">view cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                     <nav>
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children ">
-                              <a href="shop.html">shop</a>
+                              <a href="{{url('/')}}">Home</a>
                             </li>
                         </ul>
                     </nav>
@@ -206,8 +206,8 @@
                     <a class="mobile-account-active" href="#">Account <i class="sli sli-arrow-down"></i></a>
                     <div class="lang-curr-dropdown account-dropdown-active">
                         <ul>
-                            <li><a href="login-register.html">Login</a></li>
-                            <li><a href="login-register.html">Create Account</a></li>
+                            <li><a href="{{url('login')}}">Login</a></li>
+                            <li><a href="{{url('register')}}">Create Account</a></li>
                             <li><a href="my-account.html">My Account</a></li>
                         </ul>
                     </div>

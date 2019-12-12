@@ -12,5 +12,27 @@
 */
 
 Route::get('/', function () {
-    return view('shop/shop');
+    return view('shop.shop');
+});
+
+Route::get('cartlist', function() {
+    return view('cart.cart');
+});
+
+Route::group(['middleware' => 'guest'], function () {
+
+  Route::get('login', function() {
+      return view('login.login');
+  });
+
+  Route::get('dologin', 'LoginController@dologin');
+
+  Route::get('register', function() {
+      return view('login.login');
+  });
+
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('logout', 'LogoutController@dologout');
 });

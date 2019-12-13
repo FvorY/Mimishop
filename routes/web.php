@@ -35,4 +35,6 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'LogoutController@dologout');
+
+    Route::get('myaccount/{id}', 'AccountController@index');
 });

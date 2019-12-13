@@ -1,3 +1,8 @@
+
+@php
+  use Illuminate\Support\Facades\Crypt;
+@endphp
+
 <header class="header-area sticky-bar">
         <div class="main-header-wrap">
             <div class="container">
@@ -81,9 +86,15 @@
                                         <li>
                                             <h4>Account</h4>
                                             <ul>
+                                              @if (Auth::check() == true)
+
+                                              @else
                                                 <li><a href="{{url('login')}}">Login</a></li>
                                                 <li><a href="{{url('register')}}">Create Account</a></li>
-                                                <li><a href="my-account.html">My Account</a></li>
+                                              @endif
+                                              @if (Auth::check() == true)
+                                                <li><a href="{{url('myaccount')}}/{{encrypt(Auth::user()->id_account)}}">My Account - {{Auth::user()->fullname}}</a></li>
+                                              @endif
                                             </ul>
                                         </li>
                                     </ul>

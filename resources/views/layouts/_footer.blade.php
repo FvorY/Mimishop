@@ -1,11 +1,5 @@
-<footer style="margin-top: 100px; margin-bottom: 20px; font-size: 15px;">
+<footer>
 
-<center>
-  <b>©Copyright - 2019 all rights reserved
-    <br>
-    <br>
-    <span style="color: #ff3535;"> Design & Developed With ❤ </span>
-  </b>
-</center>
+    <center><b style="font-size: 14px;">Copyright @ 2019 All Right Reserved </b></center>
 
 </footer>

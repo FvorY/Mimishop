@@ -63,7 +63,7 @@
 
                                             <div class="single-input-item">
                                                 {{-- <a href="#" class="check-btn sqr-btn">Edit Profile</a> --}}
-                                                <button class="check-btn sqr-btn ">Edit Profile</button>
+                                                <button class="check-btn sqr-btn" type="button" id="btnedit">Edit Profile</button>
                                             </div>
                                         </form>
                                     </div>
@@ -78,5 +78,11 @@
 
 @endsection
 @section('extra_script')
+
+<script type="text/javascript">
+  $("#btnedit").on('click', function() {
+    window.location.href = "{{url('/editaccount')}}" + "/" + "{{encrypt(Auth::user()->id_account)}}";
+  });
+</script>
 
 @endsection

@@ -217,9 +217,15 @@
                     <a class="mobile-account-active" href="#">Account <i class="sli sli-arrow-down"></i></a>
                     <div class="lang-curr-dropdown account-dropdown-active">
                         <ul>
+                          @if (Auth::check() == true)
+
+                          @else
                             <li><a href="{{url('login')}}">Login</a></li>
                             <li><a href="{{url('register')}}">Create Account</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
+                          @endif
+                          @if (Auth::check() == true)
+                            <li><a href="{{url('myaccount')}}/{{encrypt(Auth::user()->id_account)}}">My Account - {{Auth::user()->fullname}}</a></li>
+                          @endif
                         </ul>
                     </div>
                 </div>

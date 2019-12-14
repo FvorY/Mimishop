@@ -37,4 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'LogoutController@dologout');
 
     Route::get('myaccount/{id}', 'AccountController@index');
+
+    Route::get('editaccount/{id}', 'AccountController@edit');
+
+    Route::get('doedit', 'AccountController@doedit');
+    Route::post('doedit', 'AccountController@doedit');
 });

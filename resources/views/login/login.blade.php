@@ -19,6 +19,9 @@
                               <div class="login-register-form">
                                 <form class="login100-form validate-form" autocomplete="off" method="GET" action="{{ url('dologin') }}">
                                       {{ csrf_field() }}
+                                      @if (session('validate'))
+                                      <div class="red"  style="color: red"><b>Masukkan email & password dengan benar</b></div>
+                                      @endif
                                       @if (session('email'))
                                       <div class="red"  style="color: red"><b>Password Yang Anda Masukan Salah</b></div>
                                       @endif

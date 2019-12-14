@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Account;
 use Validator;
-use Carbon\Carbon;
+// use Carbon\Carbon;
 use Session;
 use DB;
 
@@ -19,20 +19,40 @@ class LoginController extends Controller
     }
 
     public function dologin(Request $req) {
-      $rules = array(
-          'email' => 'required|min:3', // make sure the email is an actual email
-          // 'email' => 'required|min:3|email',
-          'password' => 'required|min:2' // password can only be alphanumeric and has to be greater than 3 characters
-      );
+
+      $datauser = Account::where("email", $req->email)->first();
+      // dd($datauser);
+      if ($datauser != null) {
+        if ($datauser->role == "admin") {
+          $rules = array(
+              'email' => 'required|min:3', // make sure the email is an actual email
+              // 'email' => 'required|min:3|email',
+              'password' => 'required|min:2' // password can only be alphanumeric and has to be greater than 3 characters
+          );
+        } else {
+          $rules = array(
+              'email' => 'required|min:3|email', // make sure the email is an actual email
+              // 'email' => 'required|min:3|email',
+              'password' => 'required|min:2' // password can only be alphanumeric and has to be greater than 3 characters
+          );
+        }
+      } else {
+        $rules = array(
+            'email' => 'required|min:3|email', // make sure the email is an actual email
+            // 'email' => 'required|min:3|email',
+            'password' => 'required|min:2' // password can only be alphanumeric and has to be greater than 3 characters
+        );
+      }
+
     // dd($req->all());
       $validator = Validator::make($req->all(), $rules);
       if ($validator->fails()) {
-        // Session::flash('email', $validator);
-        // return back()->with('password','email');
+        Session::flash('validate', "Masukkan email & password dengan benar");
+        return back()->with('validate',"Masukkan email & password dengan benar");
         // dd($validator);
-          return Redirect('/login')
-          ->withErrors($validator) // send back all errors to the login form
-          ->withInput($req->except('password')); // send back the input (not the password) so that we can repopulate the form
+          // return Redirect('/login')
+          // ->withErrors($validator) // send back all errors to the login form
+          // ->withInput($req->except('password')); // send back the input (not the password) so that we can repopulate the form
       } else {
           $email  = $req->email;
           $password  = $req->password;

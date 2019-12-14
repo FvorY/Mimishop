@@ -53,6 +53,40 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="shop-2" class="tab-pane">
+                                <div class="shop-list-wrap shop-list-mrg2 shop-list-mrg-none mb-30">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="product-list-img">
+                                                <a href="product-details.html">
+                                                    <img src="assets/img/product/product-list-1.svg" alt="Universal Product Style">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 align-self-center">
+                                            <div class="shop-list-content">
+                                                <h3><a href="product-details.html">Demo Product Name</a></h3>
+                                                <p>It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard The standard chunk.</p>
+                                                <span>Chair</span>
+                                                <div class="shop-list-price-action-wrap">
+                                                    <div class="shop-list-price-ratting">
+                                                        <div class="ht-product-list-price">
+                                                            <span class="new">$40.00</span>
+                                                            {{-- <span class="old">$70.00</span> --}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="ht-product-list-action">
+                                                        {{-- <a class="list-wishlist" title="Add To Wishlist" href="#"><i class="sli sli-heart"></i></a> --}}
+                                                        <a class="list-cart" title="Add To Cart" href="#"><i class="sli sli-basket-loaded"></i> Add to Cart</a>
+                                                        {{-- <a class="list-refresh" title="Add To Compare" href="#"><i class="sli sli-refresh"></i></a> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="pro-pagination-style text-center mt-30">
                             <ul>

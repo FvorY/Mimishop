@@ -3,7 +3,7 @@
 @include('layouts._head')
 
 @yield('extra_style')
-<body>\
+<body>
   <div class="wrapper">
 
     @include('layouts._topbar')
@@ -11,7 +11,7 @@
     @yield('content')
 
     @include('layouts._footer')
-    
+
   </div>
 @include('layouts._script')
 

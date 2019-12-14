@@ -21,6 +21,17 @@
                                     <li class="angle-shape">
                                       <a href="{{url('/')}}"> Home </a>
                                     </li>
+                                    @if (Auth::check())
+                                      @if (Auth::user()->role == "admin")
+                                        <li class="angle-shape">
+                                          <a href="{{url('/managefeedback')}}"> Manage Feedback </a>
+                                        </li>
+                                      @elseif (Auth::user()->role == "member")
+                                        <li class="angle-shape">
+                                          <a href="{{url('/feedback')}}"> Feedback </a>
+                                        </li>
+                                      @endif
+                                    @endif
                                 </ul>
                             </nav>
                         </div>

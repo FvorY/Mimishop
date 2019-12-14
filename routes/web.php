@@ -43,3 +43,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('doedit', 'AccountController@doedit');
     Route::post('doedit', 'AccountController@doedit');
 });
+
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('managefeedback', 'FeedbackController@managefeedback');
+
+    Route::get('feedbackapprove', 'FeedbackController@approve');
+    Route::post('feedbackapprove', 'FeedbackController@approve');
+    Route::get('feedbackreject', 'FeedbackController@reject');
+    Route::post('feedbackreject', 'FeedbackController@reject');
+});
+
+
+Route::group(['middleware' => 'member'], function () {
+    Route::get('feedback', 'FeedbackController@feedback');
+});

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    <!-- Modernizer JS -->
-    <script src="{{asset('assets/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/DataTables/datatables.min.css')}}"/>
+
+    
 </head>

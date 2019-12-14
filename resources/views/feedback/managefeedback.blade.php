@@ -11,6 +11,7 @@
                     <table class="table data-table">
                     <thead class="thead-dark">
                         <tr>
+                          <th width="5%">No</th>
                           <th>Feedback Description</th>
                           <th>Status</th>
                           <th width="10%">Approve</th>
@@ -20,6 +21,7 @@
                     <tbody>
                       @foreach ($data as $key => $value)
                         <tr>
+                          <td>{{$key + 1}}</td>
                           <td>{{$value->feedback}}</th>
                           @if ($value->status == "Y")
                             <td>Approve</th>

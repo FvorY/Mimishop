@@ -32,10 +32,10 @@
                           @endif
                           <td>
                             <span type="button" class="btn btn-primary" onclick="doapprove({{$value->id_feedback}})" name="button">&#10004;</span>
-                          </th>
+                          </td>
                           <td>
                             <span type="button" class="btn btn-danger" onclick="doreject({{$value->id_feedback}})" name="button">&#10006;</span>
-                          </th>
+                          </td>
                         </tr>
                       @endforeach
                     </tbody>

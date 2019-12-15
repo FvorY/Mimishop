@@ -51,6 +51,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('feedbackapprove', 'FeedbackController@approve');
     Route::get('feedbackreject', 'FeedbackController@reject');
     Route::post('feedbackreject', 'FeedbackController@reject');
+
+    Route::get('managecategory', 'CategoryController@index');
+    Route::get('dosavecategory', 'CategoryController@dosavecategory');
+    Route::get('doeditcategory', 'CategoryController@doeditcategory');
+    Route::get('doupdatecategory', 'CategoryController@doupdatecategory');
+    Route::get('dodeletecategory', 'CategoryController@dodeletecategory');
+
+    Route::get('manageuser', 'ManageAccountController@index');
 });
 
 

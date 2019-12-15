@@ -26,6 +26,12 @@
                                         <li class="angle-shape">
                                           <a href="{{url('/managefeedback')}}"> Manage Feedback </a>
                                         </li>
+                                        <li class="angle-shape">
+                                          <a href="{{url('/managecategory')}}"> Manage Category </a>
+                                        </li>
+                                        <li class="angle-shape">
+                                          <a href="{{url('/manageuser')}}"> Manage Account </a>
+                                        </li>
                                       @elseif (Auth::user()->role == "member")
                                         <li class="angle-shape">
                                           <a href="{{url('/feedback')}}"> Feedback </a>

@@ -25,8 +25,10 @@
                           <td>{{$value->feedback}}</th>
                           @if ($value->status == "Y")
                             <td>Approve</th>
-                          @else
+                          @elseif ($value->status == "N")
                             <td>Reject</th>
+                          @else
+                            <td></td>
                           @endif
                           <td>
                             <span type="button" class="btn btn-primary" onclick="doapprove({{$value->id_feedback}})" name="button">&#10004;</span>

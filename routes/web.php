@@ -56,4 +56,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 Route::group(['middleware' => 'member'], function () {
     Route::get('feedback', 'FeedbackController@feedback');
+
+    Route::get('dofeedback', 'FeedbackController@dofeedback');
+    Route::post('dofeedback', 'FeedbackController@dofeedback');
 });

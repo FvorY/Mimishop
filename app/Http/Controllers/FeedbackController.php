@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use Session;
 
 class FeedbackController extends Controller
 {
@@ -57,5 +58,32 @@ class FeedbackController extends Controller
           "status" => "gagal",
         ]);
       }
+    }
+
+    public function feedback() {
+      return view('feedback.feedback');
+    }
+
+    public function dofeedback(Request $request) {
+      DB::beginTransaction();
+      try {
+
+        $id = DB::table("feedback")->max('id_feedback') + 1;
+
+        DB::table("feedback")
+            ->insert([
+              "id_feedback" => $id,
+              "feedback" => $request->feedback,
+            ]);
+
+        DB::commit();
+        Session::flash('sukses','Feedback berhasil dikirim!');
+        return back()->with('sukses', 'gagal');
+      } catch (\Exception $e) {
+        DB::rollback();
+        Session::flash('gagal','Feedback gagal dikirim!');
+        return back()->with('sukses', 'gagal');
+      }
+
     }
 }

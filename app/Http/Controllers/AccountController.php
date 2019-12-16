@@ -75,7 +75,7 @@ class AccountController extends Controller
         Session::flash('sukses','Update profile berhasil disimpan!');
         return back()->with('sukses', 'gagal');
       } catch (\Exception $e) {
-        DB::commit();
+        DB::rollback();
         Session::flash('gagal','Update profile gagal disimpan!');
         return back()->with('sukses', 'gagal');
       }

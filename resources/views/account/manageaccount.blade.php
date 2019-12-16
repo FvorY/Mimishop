@@ -6,8 +6,28 @@
         <div class="row">
             <div class="col-lg-12 col-md-6">
                 <div class="contact-from contact-shadow">
+                  @if (session('sukses'))
+                    <div class="alert alert-success" role="alert">
+                      Account berhasil disimpan!
+                    </div>
+                  @endif
+                  @if (session('validate'))
+                    <div class="alert alert-danger" role="alert">
+                      Isi Form Dengan Benar!
+                    </div>
+                  @endif
+                  @if (session('tidaksama'))
+                    <div class="alert alert-danger" role="alert">
+                      Password & Confirm Password Tidak Sama!
+                    </div>
+                  @endif
+                  @if (session('gagal'))
+                    <div class="alert alert-danger" role="alert">
+                      Account gagal disimpan!
+                    </div>
+                  @endif
                   <h2>Manage Account</h2>
-                      <span type="button" onclick="docreate()" class="btn btn-primary" name="button"> <em class="fa fa-pencil"></em> Insert New Account </span>
+                      <span type="button" data-toggle="modal" data-target="#modalsave" class="btn btn-primary" name="button"> <em class="fa fa-pencil"></em> Insert New Account </span>
                   <br>
                   <br>
                   <div class="table-responsive">
@@ -61,7 +81,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="modalsave" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -70,12 +90,56 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-5 col-lg-12">
-                      <center><h2 id="titlemodal">Insert New Category</h2></center>
+                      <form id="contact-form" action="{{url('dosaveuser')}}" enctype="multipart/form-data" method="post">
+                      {{ csrf_field() }}
+                      <center><h2 id="titlemodal">Insert New Account</h2></center>
+                      {{-- <<input type="hidden" name="id_account" value="{{encrypt($data->id_account)}}"> --}}
+                      <label for="fullname">Fullname : </label>
+                      <input name="fullname" id="fullname" type="text" placeholder="Fullname" >
+                      <label for="fullname">Email : </label>
+                      <input name="email" id="email" type="text" placeholder="Email" >
+                      <label for="fullname">Password : </label>
+                      <input name="password" id="password" type="password" placeholder="Password" >
+                      <label for="fullname">Confirm Password : </label>
+                      <input name="confirm_password" id="confirm_password" type="password" placeholder="Confirm Password" >
+                      <label for="phone">Phone : </label>
+                      <input name="phone" id="phone" type="number" placeholder="Phone" >
                       <br>
-                        <input type="text" name="category" value="" id="category" placeholder="Category Name">
-                        <br>
-                        <br>
-                        <button type="button" class="btn btn-primary" id="buttonsave" style="width:100% !important" name="button" onclick="dosave()"> Save </button>
+                      <br>
+                      <label for="gender">Gender : </label>
+                      <select class="form-Control" name="gender" id="gender">
+                          <option value="L">Laki - Laki</option>
+                          <option value="P">Perempuan</option>
+                      </select>
+                      <br>
+                      <br>
+                      <label for="gender">Role : </label>
+                      <select class="form-Control" name="role" id="role">
+                          <option value="admin">Admin</option>
+                          <option value="member">Member</option>
+                      </select>
+                      <br>
+                      <br>
+                      <label for="address">Address : </label>
+                      <textarea name="address" id="address" rows="8" cols="20"></textarea>
+                      <label for="profile_picture">Profile picture : </label>
+                      <input type="file" name="profile_picture" id="profile_picture" value="">
+                      <br>
+                      <br>
+                      <center>
+                        <div class="image-holder">
+                          {{-- <img src="{{url('/') . "/" . $data->profile_picture}}" class="thumb-image img-responsive" width="150px" alt=""> --}}
+                        </div>
+                      </center>
+                      <div class="col-md-2">
+                        <input type="checkbox" id="terms_and_condition" name="terms_and_condition" value="Y">
+                      </div>
+                      <div class="col-md-5">
+                          I agree to term and condition
+                      </div>
+                      <br>
+                        <button type="submit" class="btn btn-primary" id="buttonsave" style="width:100% !important" name="button" > Save </button>
+                      </form>
                     </div>
                 </div>
               </div>
@@ -88,124 +152,31 @@
 @section('extra_script')
 
   <script type="text/javascript">
-
-    function dosave() {
-      $.ajax({
-        type: 'get',
-        data: {category: $("#category").val()},
-        dataType: 'json',
-        url: "{{url('dosavecategory')}}",
-        success : function(response) {
-          if (response.status == "sukses") {
-            swal.fire({
-                title: "Save",
-                text: "Category berhasil disimpan!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
+  $("#profile_picture").on('change', function () {
+      $('.save').attr('disabled', false);
+      if (typeof (FileReader) != "undefined") {
+          var image_holder = $(".image-holder");
+          image_holder.empty();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              image_holder.html('<img src="{{ asset('assets/img/loading.gif') }}" class="img-responsive" width="60px">');
+              $('.save').attr('disabled', true);
               setTimeout(function(){
-                    window.location.reload();
-            }, 850);
-          } else {
-            swal.fire({
-                title: "Save",
-                text: "Category gagal disimpan!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
+                  image_holder.empty();
+                  $("<img />", {
+                      "src": e.target.result,
+                      "class": "thumb-image img-responsive",
+                      "width": "150px",
+                  }).appendTo(image_holder);
+                  $('.save').attr('disabled', false);
+              }, 2000)
           }
-        }
-      });
-    }
-
-    function doedit(id) {
-      $.ajax({
-        type: 'get',
-        data: {id: id},
-        dataType: 'json',
-        url: "{{url('doeditcategory')}}",
-        success : function(response) {
-          $("#category").val(response.category_name);
-          $("#exampleModal").modal('show');
-          $('#titlemodal').text("Update Category");
-          $('#buttonsave').text("Update");
-          $('#buttonsave').attr('onclick', 'doupdate('+id+')');
-        }
-      });
-    }
-
-    function docreate(){
-      $("#exampleModal").modal('show');
-      $('#titlemodal').text("Insert New Category");
-      $('#buttonsave').text("Save");
-      $('#buttonsave').attr('onclick', 'dosave()');
-      $("#category").val("");
-    }
-
-    function doupdate(id){
-      $.ajax({
-        type: 'get',
-        data: {id: id, category: $('#category').val()},
-        dataType: 'json',
-        url: "{{url('doupdatecategory')}}",
-        success : function(response) {
-          if (response.status == "sukses") {
-            swal.fire({
-                title: "Save",
-                text: "Category berhasil diupdate!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
-              setTimeout(function(){
-                    window.location.reload();
-            }, 850);
-          } else {
-            swal.fire({
-                title: "Save",
-                text: "Category gagal diupdate!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
-          }
-        }
-      });
-    }
-
-    function dodelete(id){
-      $.ajax({
-        type: 'get',
-        data: {id: id},
-        dataType: 'json',
-        url: "{{url('dodeletecategory')}}",
-        success : function(response) {
-          if (response.status == "sukses") {
-            swal.fire({
-                title: "Save",
-                text: "Category berhasil dihapus!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
-              setTimeout(function(){
-                    window.location.reload();
-            }, 850);
-          } else {
-            swal.fire({
-                title: "Save",
-                text: "Category gagal dihapus!",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
-          }
-        }
-      });
-    }
-
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+          alert("This browser does not support FileReader.");
+      }
+  });
   </script>
 
 @endsection

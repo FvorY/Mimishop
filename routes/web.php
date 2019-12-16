@@ -59,6 +59,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('dodeletecategory', 'CategoryController@dodeletecategory');
 
     Route::get('manageuser', 'ManageAccountController@index');
+    Route::get('dosaveuser', 'ManageAccountController@dosaveuser');
+    Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
+    Route::get('doedituser', 'ManageAccountController@doedituser');
+    Route::get('doupdateuser', 'ManageAccountController@doupdateuser');
+    Route::get('dodeleteuser', 'ManageAccountController@dodeleteuser');
 });
 
 

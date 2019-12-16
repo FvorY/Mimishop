@@ -25,7 +25,7 @@
                         <label for="fullname">Email : </label>
                         <input name="email" id="email" type="text" placeholder="Email" value="{{$data->email}}">
                         <label for="phone">Phone : </label>
-                        <input name="phone" id="phone" type="text" placeholder="Phone" value="{{$data->phone}}">
+                        <input name="phone" id="phone" type="number" placeholder="Phone" value="{{$data->phone}}">
                         <br>
                         <br>
                         <label for="gender">Gender : </label>

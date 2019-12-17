@@ -21,8 +21,8 @@ class ManageAccountController extends Controller
 
     public function dosaveuser(Request $request) {
       // dd($request);
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
 
           $rules = array(
               'fullname' => 'required',  // password can only be alphanumeric and has to be greater than 3 characters
@@ -87,7 +87,7 @@ class ManageAccountController extends Controller
                     "gender" => $request->gender,
                     "address" => $request->address,
                     "profile_picture" => $imgPath,
-                    "terms_and_condition" => $request->terms_and_condition,  
+                    "terms_and_condition" => $request->terms_and_condition,
                   ]);
 
                   DB::commit();
@@ -96,11 +96,120 @@ class ManageAccountController extends Controller
             }
           }
 
-        //     } catch (\Exception $e) {
-        //       DB::rollback();
-        //       Session::flash('gagal','Account gagal disimpan!');
-        //       return back()->with('gagal', 'gagal');
-        // }
+            } catch (\Exception $e) {
+              DB::rollback();
+              Session::flash('gagal','Account gagal disimpan!');
+              return back()->with('gagal', 'gagal');
+        }
+    }
+
+    public function doedituser(Request $request) {
+      $data = DB::table("account")
+                ->where("id_account", $request->id)
+                ->first();
+
+      return response()->json($data);
+    }
+
+    public function doupdateuser(Request $request) {
+      // dd($request);
+        DB::beginTransaction();
+        try {
+
+          $rules = array(
+              'fullname' => 'required',  // password can only be alphanumeric and has to be greater than 3 characters
+              "email" => 'required|email',
+              "role" => 'required',
+              "phone" => 'required',
+              "gender" => 'required',
+              "address" => 'required',
+          );
+
+          $validator = Validator::make($request->all(), $rules);
+
+          if ($validator->fails()) {
+            Session::flash('validate', "Isi semua form");
+            return back()->with('validate',"Isi semua form");
+            // dd($validator);
+              // return Redirect('/login')
+              // ->withErrors($validator) // send back all errors to the login form
+              // ->withInput($req->except('password')); // send back the input (not the password) so that we can repopulate the form
+          } else {
+            if ($request->password != $request->confirm_password) {
+              Session::flash('tidaksama','Account password & confirm password tidak sama!');
+              return back()->with('tidaksama', 'tidaksama');
+            } else {
+              $id = DB::table("account")->max('id_account') + 1;
+
+              $folder = "profile";
+              $dir = 'image/uploads/account/' . $id;
+              $this->deleteDir($dir);
+              $childPath = $dir . '/';
+              $path = $childPath;
+
+              $file = $request->file('profile_picture');
+
+              $name = null;
+              if ($file != null) {
+                  $name = $folder . '.' . $file->getClientOriginalExtension();
+                  if (!File::exists($path)) {
+                      if (File::makeDirectory($path, 0777, true)) {
+                          $file->move($path, $name);
+                          $imgPath = $childPath . $name;
+                      } else
+                          $imgPath = null;
+                  } else {
+                      return 'already exist';
+                  }
+              } else {
+                $imgPath = $request->profile_picture_old;
+              }
+
+              DB::table("account")
+                  ->where('id_account', $request->id)
+                  ->update([
+                    "fullname" => $request->fullname,
+                    "email" => $request->email,
+                    "role" => $request->role,
+                    "phone" => $request->phone,
+                    "gender" => $request->gender,
+                    "address" => $request->address,
+                    "profile_picture" => $imgPath,
+                  ]);
+
+                  DB::commit();
+                  Session::flash('sukses','Account berhasil disimpan!');
+                  return back()->with('sukses', 'sukses');
+            }
+          }
+
+            } catch (\Exception $e) {
+              DB::rollback();
+              Session::flash('gagal','Account gagal disimpan!');
+              return back()->with('gagal', 'gagal');
+        }
+    }
+
+    public function dodeleteuser(Request $request) {
+      DB::beginTransaction();
+      try {
+
+
+        DB::table('Account')
+            ->where('id_account', $request->id)
+            ->delete();
+
+        DB::commit();
+        return response()->json([
+          'status' => 'sukses'
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+          'status' => 'gagal'
+        ]);
+      }
+
     }
 
     public function deleteDir($dirPath)

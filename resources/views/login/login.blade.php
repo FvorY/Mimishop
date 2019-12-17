@@ -23,7 +23,7 @@
                                       <div class="red"  style="color: red"><b>Masukkan email & password dengan benar</b></div>
                                       @endif
                                       @if (session('email'))
-                                      <div class="red"  style="color: red"><b>Password Yang Anda Masukan Salah</b></div>
+                                      <div class="red"  style="color: red"><b>Email Tidak ada</b></div>
                                       @endif
                                       <input type="text" name="email" placeholder="Email">
                                       @if (session('password'))

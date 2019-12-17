@@ -63,6 +63,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
     Route::get('doedituser', 'ManageAccountController@doedituser');
     Route::get('doupdateuser', 'ManageAccountController@doupdateuser');
+    Route::post('doupdateuser', 'ManageAccountController@doupdateuser');
     Route::get('dodeleteuser', 'ManageAccountController@dodeleteuser');
 });
 

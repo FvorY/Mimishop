@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-6">
                 <div class="contact-from contact-shadow">
+                  <br>
                   @if (session('sukses'))
                     <div class="alert alert-success" role="alert">
                       Account berhasil disimpan!
@@ -73,6 +74,7 @@
                       @endforeach
                     </tbody>
                     </table>
+                    <br>
                   </div>
                 </div>
             </div>
@@ -95,13 +97,80 @@
                       <center><h2 id="titlemodal">Insert New Account</h2></center>
                       {{-- <<input type="hidden" name="id_account" value="{{encrypt($data->id_account)}}"> --}}
                       <label for="fullname">Fullname : </label>
+                      <input name="fullname" type="text" placeholder="Fullname" >
+                      <label for="fullname">Email : </label>
+                      <input name="email" type="text" placeholder="Email" >
+                      <label for="fullname">Password : </label>
+                      <input name="password" type="password" placeholder="Password" >
+                      <label for="fullname">Confirm Password : </label>
+                      <input name="confirm_password" type="password" placeholder="Confirm Password" >
+                      <label for="phone">Phone : </label>
+                      <input name="phone" type="number" placeholder="Phone" >
+                      <br>
+                      <br>
+                      <label for="gender">Gender : </label>
+                      <select class="form-Control" name="gender">
+                          <option value="L">Laki - Laki</option>
+                          <option value="P">Perempuan</option>
+                      </select>
+                      <br>
+                      <br>
+                      <label for="gender">Role : </label>
+                      <select class="form-Control" name="role">
+                          <option value="admin">Admin</option>
+                          <option value="member">Member</option>
+                      </select>
+                      <br>
+                      <br>
+                      <label for="address">Address : </label>
+                      <textarea name="address" rows="8" cols="20"></textarea>
+                      <label for="profile_picture">Profile picture : </label>
+                      <input type="file" name="profile_picture" value="">
+                      <br>
+                      <br>
+                      <center>
+                        <div class="image-holder">
+                          {{-- <img src="{{url('/') . "/" . $data->profile_picture}}" class="thumb-image img-responsive" width="150px" alt=""> --}}
+                        </div>
+                      </center>
+                      <div class="col-md-2">
+                        <input type="checkbox" name="terms_and_condition" value="Y">
+                      </div>
+                      <div class="col-md-5">
+                          I agree to term and condition
+                      </div>
+                      <br>
+                        <button type="submit" class="btn btn-primary" style="width:100% !important" name="button" > Save </button>
+                      </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+<!-- Modal end -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="modaledit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 col-lg-12">
+                      <form id="contact-form" action="{{url('doupdateuser')}}" enctype="multipart/form-data" method="post">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="id" id="id">
+                      <input type="hidden" name="profile_picture_old" id="profile_picture_old">
+                      <center><h2 id="titlemodal">Insert New Account</h2></center>
+                      {{-- <<input type="hidden" name="id_account" value="{{encrypt($data->id_account)}}"> --}}
+                      <label for="fullname">Fullname : </label>
                       <input name="fullname" id="fullname" type="text" placeholder="Fullname" >
                       <label for="fullname">Email : </label>
                       <input name="email" id="email" type="text" placeholder="Email" >
-                      <label for="fullname">Password : </label>
-                      <input name="password" id="password" type="password" placeholder="Password" >
-                      <label for="fullname">Confirm Password : </label>
-                      <input name="confirm_password" id="confirm_password" type="password" placeholder="Confirm Password" >
                       <label for="phone">Phone : </label>
                       <input name="phone" id="phone" type="number" placeholder="Phone" >
                       <br>
@@ -131,12 +200,6 @@
                           {{-- <img src="{{url('/') . "/" . $data->profile_picture}}" class="thumb-image img-responsive" width="150px" alt=""> --}}
                         </div>
                       </center>
-                      <div class="col-md-2">
-                        <input type="checkbox" id="terms_and_condition" name="terms_and_condition" value="Y">
-                      </div>
-                      <div class="col-md-5">
-                          I agree to term and condition
-                      </div>
                       <br>
                         <button type="submit" class="btn btn-primary" id="buttonsave" style="width:100% !important" name="button" > Save </button>
                       </form>
@@ -177,6 +240,66 @@
           alert("This browser does not support FileReader.");
       }
   });
+
+  function doedit(id) {
+    $.ajax({
+      type: 'get',
+      data: {id:id},
+      dataType: 'json',
+      url: "{{url('/doedituser')}}",
+      success : function(response) {
+        $('#fullname').val(response.fullname);
+        $('#email').val(response.email);
+        $('#phone').val(response.phone);
+        $('#address').text(response.address)
+        $('#gender').val(response.gender).trigger('change');
+        $('#role').val(response.role).trigger('change');
+        $('#profile_picture_old').val(response.profile_picture);
+        $('#id').val(response.id_account);
+
+        var image_holder = $(".image-holder");
+
+        $("<img />", {
+            "src": "{{url('/')}}/"+response.profile_picture,
+            "class": "thumb-image img-responsive",
+            "width": "150px",
+        }).appendTo(image_holder);
+
+        $('#modaledit').modal('show');
+      }
+    });
+  }
+
+  function dodelete(id){
+    $.ajax({
+      type: 'get',
+      data: {id: id},
+      dataType: 'json',
+      url: "{{url('dodeleteuser')}}",
+      success : function(response) {
+        if (response.status == "sukses") {
+          swal.fire({
+              title: "Save",
+              text: "Account berhasil dihapus!",
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 900
+          });
+            setTimeout(function(){
+                  window.location.reload();
+          }, 850);
+        } else {
+          swal.fire({
+              title: "Save",
+              text: "Account gagal dihapus!",
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 900
+          });
+        }
+      }
+    });
+  }
   </script>
 
 @endsection

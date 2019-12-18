@@ -125,11 +125,11 @@
                       <label for="address">Address : </label>
                       <textarea name="address" rows="8" cols="20"></textarea>
                       <label for="profile_picture">Profile picture : </label>
-                      <input type="file" name="profile_picture" value="">
+                      <input type="file" name="profile_picture" class="profile_picture" value="">
                       <br>
                       <br>
                       <center>
-                        <div class="image-holder">
+                        <div class="image-holder" style="display: none">
                           {{-- <img src="{{url('/') . "/" . $data->profile_picture}}" class="thumb-image img-responsive" width="150px" alt=""> --}}
                         </div>
                       </center>
@@ -165,7 +165,7 @@
                       {{ csrf_field() }}
                       <input type="hidden" name="id" id="id">
                       <input type="hidden" name="profile_picture_old" id="profile_picture_old">
-                      <center><h2 id="titlemodal">Insert New Account</h2></center>
+                      <center><h2 id="titlemodal">Update New Account</h2></center>
                       {{-- <<input type="hidden" name="id_account" value="{{encrypt($data->id_account)}}"> --}}
                       <label for="fullname">Fullname : </label>
                       <input name="fullname" id="fullname" type="text" placeholder="Fullname" >
@@ -192,11 +192,11 @@
                       <label for="address">Address : </label>
                       <textarea name="address" id="address" rows="8" cols="20"></textarea>
                       <label for="profile_picture">Profile picture : </label>
-                      <input type="file" name="profile_picture" id="profile_picture" value="">
+                      <input type="file" name="profile_picture" class="profile_picture" id="profile_picture" value="">
                       <br>
                       <br>
                       <center>
-                        <div class="image-holder">
+                        <div class="image-holder" style="display: none">
                           {{-- <img src="{{url('/') . "/" . $data->profile_picture}}" class="thumb-image img-responsive" width="150px" alt=""> --}}
                         </div>
                       </center>
@@ -215,15 +215,15 @@
 @section('extra_script')
 
   <script type="text/javascript">
-  $("#profile_picture").on('change', function () {
-      $('.save').attr('disabled', false);
+  $(".profile_picture").on('change', function () {
+      // $('.save').attr('disabled', false);
       if (typeof (FileReader) != "undefined") {
           var image_holder = $(".image-holder");
           image_holder.empty();
           var reader = new FileReader();
           reader.onload = function (e) {
               image_holder.html('<img src="{{ asset('assets/img/loading.gif') }}" class="img-responsive" width="60px">');
-              $('.save').attr('disabled', true);
+              // $('.save').attr('disabled', true);
               setTimeout(function(){
                   image_holder.empty();
                   $("<img />", {
@@ -231,7 +231,7 @@
                       "class": "thumb-image img-responsive",
                       "width": "150px",
                   }).appendTo(image_holder);
-                  $('.save').attr('disabled', false);
+                  // $('.save').attr('disabled', false);
               }, 2000)
           }
           image_holder.show();
@@ -259,11 +259,14 @@
 
         var image_holder = $(".image-holder");
 
+        image_holder.empty();
+
         $("<img />", {
             "src": "{{url('/')}}/"+response.profile_picture,
             "class": "thumb-image img-responsive",
             "width": "150px",
         }).appendTo(image_holder);
+
 
         $('#modaledit').modal('show');
       }
@@ -279,7 +282,7 @@
       success : function(response) {
         if (response.status == "sukses") {
           swal.fire({
-              title: "Save",
+              title: "Delete",
               text: "Account berhasil dihapus!",
               icon: 'success',
               showConfirmButton: false,
@@ -290,7 +293,7 @@
           }, 850);
         } else {
           swal.fire({
-              title: "Save",
+              title: "Delete",
               text: "Account gagal dihapus!",
               icon: 'success',
               showConfirmButton: false,

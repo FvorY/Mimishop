@@ -19,9 +19,16 @@ Route::get('cartlist', function() {
     return view('cart.cart');
 });
 
+Route::get('dosaveuser', 'ManageAccountController@dosaveuser');
+Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
+
 Route::group(['middleware' => 'guest'], function () {
 
   Route::get('login', function() {
+      return view('login.login');
+  });
+
+  Route::get('register', function() {
       return view('login.login');
   });
 
@@ -59,12 +66,21 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('dodeletecategory', 'CategoryController@dodeletecategory');
 
     Route::get('manageuser', 'ManageAccountController@index');
-    Route::get('dosaveuser', 'ManageAccountController@dosaveuser');
-    Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
+
     Route::get('doedituser', 'ManageAccountController@doedituser');
     Route::get('doupdateuser', 'ManageAccountController@doupdateuser');
     Route::post('doupdateuser', 'ManageAccountController@doupdateuser');
     Route::get('dodeleteuser', 'ManageAccountController@dodeleteuser');
+
+    Route::get('managefigure', 'FigureController@index');
+
+    Route::get('doeditfigure', 'FigureController@doeditfigure');
+    Route::get('doupdatefigure', 'FigureController@doupdatefigure');
+    Route::post('doupdatefigure', 'FigureController@doupdatefigure');
+    Route::get('dodeletefigure', 'FigureController@dodeletefigure');
+    Route::get('dosavefigure', 'FigureController@dosavefigure');
+    Route::post('dosavefigure', 'FigureController@dosavefigure');
+
 });
 
 

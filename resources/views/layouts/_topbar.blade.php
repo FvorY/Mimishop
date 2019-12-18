@@ -24,13 +24,16 @@
                                     @if (Auth::check())
                                       @if (Auth::user()->role == "admin")
                                         <li class="angle-shape">
-                                          <a href="{{url('/managefeedback')}}"> Manage Feedback </a>
+                                          <a href="{{url('/managefeedback')}}"> Feedback </a>
                                         </li>
                                         <li class="angle-shape">
-                                          <a href="{{url('/managecategory')}}"> Manage Category </a>
+                                          <a href="{{url('/managecategory')}}"> Category </a>
                                         </li>
                                         <li class="angle-shape">
-                                          <a href="{{url('/manageuser')}}"> Manage Account </a>
+                                          <a href="{{url('/manageuser')}}"> Account </a>
+                                        </li>
+                                        <li class="angle-shape">
+                                          <a href="{{url('/managefigure')}}"> Figure </a>
                                         </li>
                                       @elseif (Auth::user()->role == "member")
                                         <li class="angle-shape">

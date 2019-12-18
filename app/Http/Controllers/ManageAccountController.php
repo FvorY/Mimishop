@@ -53,7 +53,7 @@ class ManageAccountController extends Controller
 
               $folder = "profile";
               $dir = 'image/uploads/account/' . $id;
-              $this->deleteDir($dir);
+
               $childPath = $dir . '/';
               $path = $childPath;
 
@@ -61,6 +61,7 @@ class ManageAccountController extends Controller
 
               $name = null;
               if ($file != null) {
+                $this->deleteDir($dir);
                   $name = $folder . '.' . $file->getClientOriginalExtension();
                   if (!File::exists($path)) {
                       if (File::makeDirectory($path, 0777, true)) {
@@ -143,7 +144,7 @@ class ManageAccountController extends Controller
 
               $folder = "profile";
               $dir = 'image/uploads/account/' . $id;
-              $this->deleteDir($dir);
+
               $childPath = $dir . '/';
               $path = $childPath;
 
@@ -151,6 +152,7 @@ class ManageAccountController extends Controller
 
               $name = null;
               if ($file != null) {
+                $this->deleteDir($dir);
                   $name = $folder . '.' . $file->getClientOriginalExtension();
                   if (!File::exists($path)) {
                       if (File::makeDirectory($path, 0777, true)) {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Session;
+use Auth;
 
 class FeedbackController extends Controller
 {
@@ -13,7 +14,11 @@ class FeedbackController extends Controller
       $data = DB::table("feedback")
                 ->get();
 
-      return view('feedback.managefeedback', compact('data'));
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('feedback.managefeedback', compact('data', 'countcart'));
     }
 
     public function approve(Request $request) {
@@ -61,7 +66,12 @@ class FeedbackController extends Controller
     }
 
     public function feedback() {
-      return view('feedback.feedback');
+
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('feedback.feedback', compact('countcart'));
     }
 
     public function dofeedback(Request $request) {

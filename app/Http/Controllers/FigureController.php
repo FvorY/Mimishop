@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use File;
 use Session;
+use Auth;
 
 class FigureController extends Controller
 {
@@ -18,7 +19,11 @@ class FigureController extends Controller
         $category = DB::table('category')
                       ->get();
 
-        return view('figure.managefigure', compact('data', 'category'));
+        $countcart = DB::table('cart')
+                      ->where('id_account', Auth::user()->id_account)
+                      ->count();
+
+        return view('figure.managefigure', compact('data', 'category', 'countcart'));
     }
 
     public function dosavefigure(Request $request) {

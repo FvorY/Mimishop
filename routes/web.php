@@ -11,16 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('shop.shop');
-});
+Route::get('/', 'ShopController@index');
 
-Route::get('cartlist', function() {
-    return view('cart.cart');
-});
+Route::get('searchfigure', 'ShopController@search');
+Route::post('searchfigure', 'ShopController@search');
 
 Route::get('dosaveuser', 'ManageAccountController@dosaveuser');
-Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
+
+Route::get('detailfigure', 'ShopController@detailfigure');
+// Route::post('dosaveuser', 'ManageAccountController@dosaveuser');
 
 Route::group(['middleware' => 'guest'], function () {
 
@@ -49,6 +48,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('doedit', 'AccountController@doedit');
     Route::post('doedit', 'AccountController@doedit');
+
+    Route::get('addcart', 'ShopController@add');
+    Route::get('getcart', 'ShopController@get');
+    Route::get('removecart', 'ShopController@remove');
+
+    Route::get('cartlist', 'ShopController@cartlist');
+
+    Route::get('savecart', 'ShopController@savecart');
+    Route::get('updateqty', 'ShopController@updateqty');
+
+
 });
 
 Route::group(['middleware' => 'admin'], function () {
@@ -80,6 +90,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('dodeletefigure', 'FigureController@dodeletefigure');
     Route::get('dosavefigure', 'FigureController@dosavefigure');
     Route::post('dosavefigure', 'FigureController@dosavefigure');
+
+    Route::get('managetransaction', 'TransactionController@index');
 
 });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use Auth;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,11 @@ class CategoryController extends Controller
       $data = DB::table("category")
                 ->get();
 
-      return view('category.category', compact('data'));
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('category.category', compact('data', 'countcart'));
     }
 
     public function dosavecategory(Request $request) {

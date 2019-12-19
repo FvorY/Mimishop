@@ -8,6 +8,7 @@ use DB;
 use Validator;
 use Session;
 use File;
+use Auth;
 
 class ManageAccountController extends Controller
 {
@@ -16,7 +17,11 @@ class ManageAccountController extends Controller
       $data = DB::table("Account")
                 ->get();
 
-      return view('account.manageaccount', compact('data'));
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('account.manageaccount', compact('data', 'countcart'));
     }
 
     public function dosaveuser(Request $request) {

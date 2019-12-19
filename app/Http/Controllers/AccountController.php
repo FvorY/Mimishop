@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use File;
 use Session;
+use Auth;
 use Illuminate\Support\Facades\Crypt;
 
 class AccountController extends Controller
@@ -18,7 +19,11 @@ class AccountController extends Controller
                 ->where('id_account', $iden)
                 ->first();
 
-      return view('account.account', compact('data'));
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('account.account', compact('data', 'countcart'));
     }
 
     public function edit($id) {
@@ -28,7 +33,11 @@ class AccountController extends Controller
                 ->where('id_account', $iden)
                 ->first();
 
-      return view('account.edit', compact('data'));
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
+
+      return view('account.edit', compact('data', 'countcart'));
     }
 
     public function doedit(Request $req) {

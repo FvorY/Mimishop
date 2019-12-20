@@ -153,7 +153,8 @@ class ShopController extends Controller
         }
 
         DB::table('cart')
-            ->truncate();
+            ->where('id_account', Auth::user()->id_account),
+            ->delete();
 
         DB::commit();
         return response()->json([

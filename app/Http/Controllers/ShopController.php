@@ -35,9 +35,12 @@ class ShopController extends Controller
                 ->where('figure.name', 'like', '%' . $request->search . '%')
                 ->paginate(15);
 
+      $countcart = DB::table('cart')
+                    ->where('id_account', Auth::user()->id_account)
+                    ->count();
                 // dd($data);
 
-      return view('shop.shop', compact('data'));
+      return view('shop.shop', compact('data', 'countcart'));
     }
 
     public function add(Request $request) {

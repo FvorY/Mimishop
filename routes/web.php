@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,19 +25,28 @@ Route::get('detailfigure', 'ShopController@detailfigure');
 Route::group(['middleware' => 'guest'], function () {
 
   Route::get('login', function() {
-      $countcart = null;
+      $countcart = \DB::table('cart')
+                  ->where('id_account', Auth::user()->id_account)
+                  ->count();
+
       return view('login.login', compact('countcart'));
   });
 
   Route::get('register', function() {
-      $countcart = null;
+      $countcart = \DB::table('cart')
+                  ->where('id_account', Auth::user()->id_account)
+                  ->count();
+
       return view('login.login', compact('countcart'));
   });
 
   Route::get('dologin', 'LoginController@dologin');
 
   Route::get('register', function() {
-    $countcart = null;
+    $countcart = \DB::table('cart')
+                  ->where('id_account', Auth::user()->id_account)
+                  ->count();
+
     return view('login.login', compact('countcart'));
   });
 

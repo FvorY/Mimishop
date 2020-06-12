@@ -24,17 +24,20 @@ Route::get('detailfigure', 'ShopController@detailfigure');
 Route::group(['middleware' => 'guest'], function () {
 
   Route::get('login', function() {
-      return view('login.login');
+      $countcart = null;
+      return view('login.login', compact('countcart'));
   });
 
   Route::get('register', function() {
-      return view('login.login');
+      $countcart = null;
+      return view('login.login', compact('countcart'));
   });
 
   Route::get('dologin', 'LoginController@dologin');
 
   Route::get('register', function() {
-      return view('login.login');
+    $countcart = null;
+    return view('login.login', compact('countcart'));
   });
 
 });

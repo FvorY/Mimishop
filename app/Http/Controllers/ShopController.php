@@ -17,9 +17,14 @@ class ShopController extends Controller
                 ->join('category', "category.id_category", '=', 'figure.id_category')
                 ->paginate(15);
 
-      $countcart = DB::table('cart')
-                    ->where('id_account', Auth::user()->id_account)
-                    ->count();
+        if (Auth::check()) {
+            $countcart = DB::table('cart')
+            ->where('id_account', Auth::user()->id_account)
+            ->count();
+        } else {
+            $countcart = 0;
+        }
+
 
       return view('shop.shop', compact('data', 'countcart'));
     }
@@ -41,7 +46,7 @@ class ShopController extends Controller
 
         $check = DB::table('cart')->where('id_figure', $request->id_figure)->where('id_account', $request->id_account)->first();
 
-        if (count($check) != 0) {
+        if ($check != null) {
           DB::table('cart')
             ->where('id_cart', $check->id_cart)
             ->Update([
@@ -153,7 +158,7 @@ class ShopController extends Controller
         }
 
         DB::table('cart')
-            ->where('id_account', Auth::user()->id_account),
+            ->where('id_account', Auth::user()->id_account)
             ->delete();
 
         DB::commit();

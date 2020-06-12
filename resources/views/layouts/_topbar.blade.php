@@ -56,7 +56,13 @@
                                 <button class="icon-cart-active togglecart">
                                     <span class="icon-cart">
                                         <i class="sli sli-bag"></i>
-                                        <span class="count-style" id="countcart">{{$countcart}}</span>
+
+                                        @if ($countcart != null)
+                                          <span class="count-style" id="countcart">{{$countcart}}</span>
+                                        @else
+                                          <span class="count-style" id="countcart">0</span>
+                                        @endif
+
                                     </span>
                                 </button>
                               @endif
@@ -151,7 +157,9 @@
                                 <button class="icon-cart-active togglecart">
                                     <span class="icon-cart">
                                         <i class="sli sli-bag"></i>
+                                        @if ($countcart != null)
                                         <span class="count-style" id="countcart">{{$countcart}}</span>
+                                        @endif
                                     </span>
                                 </button>
                                 <div class="shopping-cart-content">
